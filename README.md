@@ -8,14 +8,14 @@ Skills follow the [Agent Skills](https://agentskills.io) format.
 
 ### tempo
 
-Build applications on the Tempo network with access to documentation and source code via MCP.
+Browse Tempo documentation and source code via MCP. Use for exploring protocol specs, reading SDK source, or searching docs — not for code generation.
 
 **Use when:**
 
-- Working with Tempo transactions or TIP-20 tokens
-- Integrating stablecoins or payments
-- Building on the Tempo protocol
-- Exploring Tempo source code
+- Exploring Tempo protocol specs or architecture
+- Reading source code for tempoxyz/tempo or tempoxyz/tempo-ts
+- Searching Tempo documentation
+- Looking up viem, wagmi, reth, or foundry internals
 
 **Features:**
 
@@ -23,12 +23,26 @@ Build applications on the Tempo network with access to documentation and source 
 - Browse source code for [`tempoxyz/tempo`](https://github.com/tempoxyz/tempo) (Rust node) and [`tempoxyz/tempo-ts`](https://github.com/tempoxyz/tempo-ts) (TypeScript SDK + Examples)
 - Access related libraries: [Viem](https://viem.sh/tempo), [Wagmi](https://wagmi.sh/tempo), [Reth](https://github.com/paradigmxyz/reth), [Foundry](https://github.com/foundry-rs/foundry)
 
-**Categories covered:**
+### tempo-builder
 
-- Transactions & accounts
-- TIP-20 stablecoins
-- Fee sponsorship
-- Protocol integration
+Generates application-ready TypeScript code for the Tempo network. Corrects common LLM misconceptions (wrong SDK, wrong decimals, wrong chain config) with ethskills-style "What You Probably Got Wrong" guidance. Covers TIP-20 tokens, stablecoin DEX (orderbook), and Machine Payments Protocol (MPP).
+
+**Use when:**
+
+- Creating a TIP-20 stablecoin (e.g., "create TestUSD")
+- Swapping stablecoins on the DEX
+- Adding paid API access with MPP / mppx
+- Making an AI agent pay for tools (HTTP 402)
+- Building on Tempo (chain config + correct imports + 6 decimals)
+
+**Reference files:**
+
+| File | Covers |
+|------|--------|
+| `references/quickstart.md` | Chain config, viem setup, faucet, first transfer |
+| `references/tip20-tokens.md` | Create, mint, transfer, burn, roles, pause, supply cap |
+| `references/dex.md` | Swap, quote, create pair, limit orders, orderbook |
+| `references/mpp.md` | HTTP 402 payments, mppx client/server, sessions, Stripe |
 
 ## Installation
 
@@ -44,11 +58,9 @@ Or manually:
 # Clone the repo
 git clone https://github.com/tempoxyz/agent-skills.git
 
-# Copy a skill to your agent's skills directory
-cp -r agent-skills/skills/tempo ~/.config/agents/skills/
+# Copy a skill to your project's skills directory
+cp -r agent-skills/skills/tempo-builder .agents/skills/
 ```
-
-Or add to your project's `.agents/skills/` directory for project-specific access.
 
 ### amp
 
@@ -63,10 +75,13 @@ Skills are automatically available once installed. The agent will use them when 
 **Examples:**
 
 ```
-How do I create a TIP-20 stablecoin?
+Create a TIP-20 stablecoin called TestUSD on Tempo testnet
 ```
 ```
-Show me how fee sponsorship works in Viem
+Swap 100 pathUSD for alphaUSD on the DEX
+```
+```
+Add paid API access to my Hono server using MPP
 ```
 ```
 Search the Tempo source for transaction validation
@@ -76,8 +91,9 @@ Search the Tempo source for transaction validation
 
 Each skill contains:
 
-- `SKILL.md` - Instructions for the agent
+- `SKILL.md` - Instructions and routing for the agent
 - `mcp.json` - MCP server configuration (optional)
+- `references/` - Detailed reference files per topic (optional)
 
 ## License
 

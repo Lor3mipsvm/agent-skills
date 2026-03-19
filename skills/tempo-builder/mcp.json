@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "tempo": {
+      "url": "https://docs.tempo.xyz/api/mcp"
+    }
+  }
+}

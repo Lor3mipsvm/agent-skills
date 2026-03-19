@@ -1,6 +1,8 @@
 ---
 name: tempo
-description: Builds applications on Tempo network using TypeScript SDK, Rust node, and Foundry. Use when working with Tempo transactions, TIP-20 tokens, stablecoins, or Tempo protocol integration.
+description: Browse Tempo documentation and source code. Use when exploring protocol
+  specs, reading SDK source, or searching Tempo docs. NOT for code generation — use
+  tempo-builder for that.
 ---
 
 # Tempo
