@@ -12,24 +12,18 @@
 
 ## Real Data
 
-Testnet:
-- `tempoModerato` chain ID `42431`
-- RPC: `https://rpc.moderato.tempo.xyz`
-
 Mainnet:
 - `tempo` chain ID `4217`
 - RPC: `https://rpc.tempo.xyz`
-- Explorer: `https://explore.mainnet.tempo.xyz`
+- Explorer: `https://explore.tempo.xyz`
 
-Stablecoins (Tempo Testnet token list):
-- `pathUSD`: `0x20c0000000000000000000000000000000000000`
-- `alphaUSD`: `0x20c0000000000000000000000000000000000001`
-- `betaUSD`: `0x20c0000000000000000000000000000000000002`
-- `thetaUSD`: `0x20c0000000000000000000000000000000000003`
+Testnet (development only):
+- `tempoModerato` chain ID `42431`
+- RPC: `https://rpc.moderato.tempo.xyz`
 
-Stablecoin DEX contract (Tempo Testnet):
-- `Stablecoin DEX`: `0xdec0000000000000000000000000000000000000`
-- `Fee Manager`: `0xfeec000000000000000000000000000000000000`
+Stablecoins and DEX contract addresses:
+- Verify current addresses via `mcp__tempo__search_docs` query `"stablecoin addresses"` or `"DEX contract"`.
+- Addresses may differ between mainnet and testnet.
 
 ## Operation: Get Sell Quote
 
@@ -54,8 +48,8 @@ import { client } from './viem.config'
 
 const amountOut = await client.dex.getSellQuote({
   amountIn: parseUnits('100', 6),
-  tokenIn: '0x20c0000000000000000000000000000000000000', // pathUSD
-  tokenOut: '0x20c0000000000000000000000000000000000001', // alphaUSD
+  tokenIn: TOKEN_A, // e.g. pathUSD — use your actual token address
+  tokenOut: TOKEN_B, // e.g. alphaUSD — use your actual token address
 })
 
 console.log('Amount received (quote):', amountOut)
@@ -86,8 +80,8 @@ import { client } from './viem.config'
 const receipt = await client.dex.sellSync({
   amountIn: parseUnits('100', 6),
   minAmountOut: parseUnits('95', 6),
-  tokenIn: '0x20c0000000000000000000000000000000000000', // pathUSD
-  tokenOut: '0x20c0000000000000000000000000000000000001', // alphaUSD
+  tokenIn: TOKEN_A, // e.g. pathUSD — use your actual token address
+  tokenOut: TOKEN_B, // e.g. alphaUSD — use your actual token address
 })
 
 console.log('Sell tx:', receipt.transactionHash)
@@ -119,8 +113,8 @@ import { client } from './viem.config'
 
 const amountInNeeded = await client.dex.getBuyQuote({
   amountOut: parseUnits('100', 6),
-  tokenIn: '0x20c0000000000000000000000000000000000000', // pathUSD
-  tokenOut: '0x20c0000000000000000000000000000000000001', // alphaUSD
+  tokenIn: TOKEN_A, // e.g. pathUSD — use your actual token address
+  tokenOut: TOKEN_B, // e.g. alphaUSD — use your actual token address
 })
 
 console.log('Amount needed (quote):', amountInNeeded)
@@ -151,8 +145,8 @@ import { client } from './viem.config'
 const receipt = await client.dex.buySync({
   amountOut: parseUnits('100', 6),
   maxAmountIn: parseUnits('105', 6),
-  tokenIn: '0x20c0000000000000000000000000000000000000', // pathUSD
-  tokenOut: '0x20c0000000000000000000000000000000000001', // alphaUSD
+  tokenIn: TOKEN_A, // e.g. pathUSD — use your actual token address
+  tokenOut: TOKEN_B, // e.g. alphaUSD — use your actual token address
 })
 
 console.log('Buy tx:', receipt.transactionHash)
@@ -184,7 +178,7 @@ Example:
 import { client } from './viem.config'
 
 const { key, base, quote, receipt } = await client.dex.createPairSync({
-  base: '0x20c0000000000000000000000000000000000000', // pathUSD
+  base: TOKEN_A, // e.g. pathUSD — use your actual token address
 })
 
 console.log({ key, base, quote, receipt })
@@ -216,7 +210,7 @@ import { client } from './viem.config'
 const { orderId, receipt } = await client.dex.placeSync({
   amount: parseUnits('100', 6),
   tick: Tick.fromPrice('0.99'),
-  token: '0x20c0000000000000000000000000000000000000', // pathUSD
+  token: TOKEN_A, // e.g. pathUSD — use your actual token address
   type: 'sell',
 })
 
@@ -255,7 +249,7 @@ const { orderId } = await client.dex.placeFlipSync({
   amount: parseUnits('100', 6),
   flipTick: Tick.fromPrice('1.01'),
   tick: Tick.fromPrice('0.99'),
-  token: '0x20c0000000000000000000000000000000000000', // pathUSD
+  token: TOKEN_A, // e.g. pathUSD — use your actual token address
   type: 'buy',
 })
 
@@ -335,7 +329,7 @@ import { Tick } from 'viem/tempo'
 import { client } from './viem.config'
 
 const level = await client.dex.getTickLevel({
-  base: '0x20c0000000000000000000000000000000000000', // pathUSD
+  base: TOKEN_A, // e.g. pathUSD — use your actual token address
   tick: Tick.fromPrice('1.001'),
   isBid: true,
 })
@@ -350,8 +344,8 @@ console.log('Tick level:', level)
 Verification commands:
 
 ```bash
-cast chain-id --rpc-url https://rpc.moderato.tempo.xyz
-cast block-number --rpc-url https://rpc.moderato.tempo.xyz
+cast chain-id --rpc-url https://rpc.tempo.xyz
+cast block-number --rpc-url https://rpc.tempo.xyz
 ```
 
 If unsure about any DEX action signature, verify via `mcp__tempo__search_source` with query `"dex"` in `tempoxyz/tempo-ts`.

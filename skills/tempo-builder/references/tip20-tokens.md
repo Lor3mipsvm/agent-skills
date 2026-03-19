@@ -16,14 +16,13 @@ $1.00 = 1_000000n
 On Tempo:
 - TIP-20 “currency” examples: `USD`
 - Stablecoin decimals: `6`
-- Predeployed quote stablecoin example: `pathUSD = 0x20c0000000000000000000000000000000000000`
-
-Testnet:
-- `tempoModerato` chain ID `42431`
-- RPC: `https://rpc.moderato.tempo.xyz`
+- Verify current predeployed stablecoin addresses via `mcp__tempo__search_docs` query `”stablecoin addresses”`.
 
 Mainnet:
-- `tempo` chain ID `4217`
+- `tempo` chain ID `4217`, RPC: `https://rpc.tempo.xyz`
+
+Testnet (development only):
+- `tempoModerato` chain ID `42431`, RPC: `https://rpc.moderato.tempo.xyz`
 
 ## Operation: Create a TIP-20 Stablecoin
 
@@ -84,7 +83,7 @@ import { client } from './viem.config'
 
 await client.token.grantRolesSync({
   roles: ['issuer'],
-  token: '0x20c0000000000000000000000000000000000000', // replace with your TIP-20 token address
+  token: YOUR_TOKEN_ADDRESS, // replace with your TIP-20 token address
   to: client.account!.address,
 })
 ```
@@ -164,7 +163,7 @@ import { parseUnits, toHex } from 'viem'
 import { client } from './viem.config'
 
 await client.token.transferSync({
-  token: '0x20c0000000000000000000000000000000000000', // your TIP-20 address (or replace with your token)
+  token: YOUR_TOKEN_ADDRESS, // your TIP-20 address
   to: process.env.TEMPO_RECIPIENT_ADDRESS as `0x${string}`,
   amount: parseUnits('10.5', 6),
   memo: toHex('invoice #123'),
@@ -197,7 +196,7 @@ import { parseUnits } from 'viem'
 import { client } from './viem.config'
 
 await client.token.burnSync({
-  token: '0x20c0000000000000000000000000000000000000',
+  token: YOUR_TOKEN_ADDRESS, // your TIP-20 token address
   amount: parseUnits('25', 6),
 })
 ```
@@ -226,7 +225,7 @@ import { client } from './viem.config'
 
 const balance = await client.token.getBalance({
   account: client.account!.address,
-  token: '0x20c0000000000000000000000000000000000000',
+  token: YOUR_TOKEN_ADDRESS, // your TIP-20 token address
 })
 
 console.log('Balance:', balance)
@@ -251,7 +250,7 @@ Example:
 import { client } from './viem.config'
 
 const { isPaused } = await client.token.pauseSync({
-  token: '0x20c0000000000000000000000000000000000000',
+  token: YOUR_TOKEN_ADDRESS, // your TIP-20 token address
 })
 
 console.log('Is paused:', isPaused)
@@ -281,7 +280,7 @@ import { parseUnits } from 'viem'
 import { client } from './viem.config'
 
 const { newSupplyCap } = await client.token.setSupplyCapSync({
-  token: '0x20c0000000000000000000000000000000000000',
+  token: YOUR_TOKEN_ADDRESS, // your TIP-20 token address
   supplyCap: parseUnits('1000000', 6),
 })
 
@@ -298,8 +297,8 @@ Common errors:
 Verification commands:
 
 ```bash
-cast chain-id --rpc-url https://rpc.moderato.tempo.xyz
-cast block-number --rpc-url https://rpc.moderato.tempo.xyz
+cast chain-id --rpc-url https://rpc.tempo.xyz
+cast block-number --rpc-url https://rpc.tempo.xyz
 ```
 
 If unsure about any Token action signature, verify via `mcp__tempo__search_source` with query `"token"` in `tempoxyz/tempo-ts`.

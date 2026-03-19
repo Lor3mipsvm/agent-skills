@@ -19,8 +19,8 @@ SDK:
 - CLI: `npx mppx`
 
 Payment currencies (Tempo):
-- Testnet (pathUSD): `0x20c0000000000000000000000000000000000000`
-- Mainnet: verify via `mcp__tempo__search_docs` query `"TEMPO_USD address"` (format differs from testnet)
+- Verify current stablecoin addresses via `mcp__tempo__search_docs` query `"stablecoin addresses"`.
+- Use `process.env.TEMPO_CURRENCY_ADDRESS` for portability across mainnet and testnet.
 
 Two payment intents:
 - **Charge** (one-time): ~500ms latency, per-request on-chain. Best for single API calls.
@@ -77,9 +77,8 @@ import { Mppx, tempo } from 'mppx/server'
 const mppx = Mppx.create({
   methods: [
     tempo.charge({
-      currency: '0x20c0000000000000000000000000000000000000', // pathUSD (testnet)
+      currency: process.env.TEMPO_CURRENCY_ADDRESS as `0x${string}`, // your TIP-20 stablecoin
       recipient: process.env.MPP_RECIPIENT as `0x${string}`,
-      testnet: true,
     })
   ],
   secretKey: process.env.MPP_SECRET_KEY!,  // base64 string for HMAC challenge signing
@@ -119,9 +118,8 @@ import { Mppx, tempo } from 'mppx/server'
 
 const mppx = Mppx.create({
   methods: [tempo.charge({
-      currency: '0x20c0000000000000000000000000000000000000', // pathUSD (testnet)
+      currency: process.env.TEMPO_CURRENCY_ADDRESS as `0x${string}`, // your TIP-20 stablecoin
       recipient: process.env.MPP_RECIPIENT as `0x${string}`,
-      testnet: true,
     })],
   secretKey: process.env.MPP_SECRET_KEY!,
 })
@@ -140,7 +138,7 @@ import { Mppx, tempo } from 'mppx/nextjs'
 const mppx = Mppx.create({
   methods: [
     tempo.charge({
-      currency: '0x20c0000000000000000000000000000000000000',
+      currency: process.env.TEMPO_CURRENCY_ADDRESS as `0x${string}`, // your TIP-20 stablecoin
       recipient: process.env.MPP_RECIPIENT as `0x${string}`,
     })
   ],
@@ -216,7 +214,7 @@ WHEN:
 import { privateKeyToAccount } from 'viem/accounts'
 
 tempo.charge({
-  currency: '0x20c0000000000000000000000000000000000000', // pathUSD (testnet)
+  currency: process.env.TEMPO_CURRENCY_ADDRESS as `0x${string}`, // your TIP-20 stablecoin
   recipient: process.env.MPP_RECIPIENT as `0x${string}`,
   feePayer: privateKeyToAccount(process.env.FEE_PAYER_KEY as `0x${string}`),
 })
