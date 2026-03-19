@@ -10,7 +10,7 @@ description: Generates TypeScript code for Tempo network. TIP-20 tokens, stablec
 
 ## What You Probably Got Wrong
 
-**Prefer `viem` with Tempo extensions.** Tempo is EVM-compatible and supports ethers.js, Hardhat, Foundry, and more. But for Tempo-native flows (TIP-20 tokens, DEX, faucet), `viem` + `tempoActions()` gives you first-class actions like `client.token.*` and `client.dex.*`. This skill generates code using that path.
+**Prefer `viem` with Tempo extensions.** Tempo is EVM-compatible and supports ethers.js, Hardhat, Foundry, and more. But for Tempo-native flows (TIP-20 tokens, DEX, faucet), `viem` + `.extend(tempo())` gives you first-class actions like `client.token.*` and `client.dex.*`. This skill generates code using that path.
 
 **Your decimals are wrong.** Tempo stablecoins use 6 decimals (USD), NOT 18 (ETH).
 $1.00 = 1_000000n, not 1_000000000000000000n.
@@ -22,9 +22,11 @@ $1.00 = 1_000000n, not 1_000000000000000000n.
 **You don't need a native token for gas.** Tempo fees are paid in any USD stablecoin.
 No ETH, no native token. Just stablecoins.
 
-**Block time is 1 second.** Not 12 seconds like Ethereum. Sub-second finality.
+**Finality is ~0.5 seconds.** Not 12 seconds like Ethereum.
 
-**Always read `references/quickstart.md` first for client setup.** Then read the specific reference for your task.
+**Check before you set up.** Before running any install or config steps, check if the project already has `viem` in `package.json` and a Tempo client config (look for `.extend(tempo())` or `tempoModerato` in the codebase). If setup exists, skip to the reference file for your task.
+
+**If setup is needed**, read `references/quickstart.md` first for client setup. Then read the specific reference for your task.
 
 ## Feature References
 

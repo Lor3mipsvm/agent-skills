@@ -1,8 +1,17 @@
 # Quickstart
 
+## Already Set Up?
+
+Before running install or config steps, check the project first:
+1. Is `viem` in `package.json`? → Skip `npm i viem`
+2. Does a file already import `tempo` from `viem/tempo` or `tempoModerato`? → Skip client setup, reuse the existing config
+3. Does the account already have a balance? (`client.token.getBalance`) → Skip faucet funding
+
+Only follow the steps below for what's actually missing.
+
 ## What You Probably Got Wrong
 
-**You’re using plain viem without Tempo extensions.** The Tempo actions live behind `tempoActions()`. If you don’t extend your Viem client with `tempoActions()`, you won’t have access to `client.token.*`, `client.dex.*`, `client.faucet.*`, etc.
+**You’re using plain viem without Tempo extensions.** The Tempo actions live behind `.extend(tempo())`. If you don’t extend your Viem client with `tempo()` from `viem/tempo`, you won’t have access to `client.token.*`, `client.dex.*`, `client.faucet.*`, etc.
 
 **You’re targeting the wrong chain.** Tempo testnet is `tempoModerato` with chain ID `42431` (not Ethereum mainnet chain ID `1`).
 
@@ -47,7 +56,7 @@ npm i viem
 import { createClient, http, publicActions, walletActions } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { tempoModerato } from 'viem/chains'
-import { tempoActions } from 'viem/tempo'
+import { tempo } from 'viem/tempo'
 
 // Never hardcode private keys in commits.
 const privateKey = process.env.TEMPO_PRIVATE_KEY
@@ -60,7 +69,7 @@ export const client = createClient({
 })
   .extend(publicActions)
   .extend(walletActions)
-  .extend(tempoActions())
+  .extend(tempo())
 ```
 
 ### `viem.config.ts` (Mainnet)
@@ -69,7 +78,7 @@ export const client = createClient({
 import { createClient, http, publicActions, walletActions } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { tempo } from 'viem/chains'
-import { tempoActions } from 'viem/tempo'
+import { tempo } from 'viem/tempo'
 
 const privateKey = process.env.TEMPO_PRIVATE_KEY
 if (!privateKey) throw new Error('Missing TEMPO_PRIVATE_KEY')
@@ -81,7 +90,7 @@ export const client = createClient({
 })
   .extend(publicActions)
   .extend(walletActions)
-  .extend(tempoActions())
+  .extend(tempo())
 ```
 
 ## Sync vs Non-Sync Actions
@@ -134,7 +143,7 @@ console.log('Transfer tx:', receipt.transactionHash)
 
 ## Common Errors
 
-- **`Cannot read properties of undefined (reading 'token')`**: You forgot `.extend(tempoActions())` on your client.
+- **`Cannot read properties of undefined (reading 'token')`**: You forgot `.extend(tempo())` on your client.
 - **Chain ID mismatch**: You imported `mainnet` instead of `tempoModerato`. Use `import { tempoModerato } from 'viem/chains'`.
 - **`insufficient funds for gas`**: Tempo has no native gas token. Fund your account with the faucet first — it provides stablecoins for fees.
 - **18-decimal overflow**: You used `parseUnits('1', 18)` instead of `parseUnits('1', 6)`. Tempo stablecoins are 6 decimals.
