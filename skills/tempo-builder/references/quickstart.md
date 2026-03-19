@@ -32,7 +32,7 @@ Testnet (for development only):
 - Network: `tempoModerato`
 - Chain ID: `42431`
 - RPC: `https://rpc.moderato.tempo.xyz`
-- Explorer: `https://explore.tempo.xyz/testnet`
+- Explorer: `https://explore.tempo.xyz`
 
 Predeployed stablecoin (TIP-20):
 - Verify current addresses via `mcp__tempo__search_docs` query `"stablecoin addresses"` — addresses may differ between mainnet and testnet.
