@@ -10,13 +10,12 @@ description: Generates TypeScript code for Tempo network. TIP-20 tokens, stablec
 
 ## What You Probably Got Wrong
 
-**You're using the wrong SDK.** Tempo is NOT vanilla Ethereum. Do NOT use ethers.js
-or plain viem. Use `viem` with Tempo extensions: `import { ... } from 'viem/tempo'`.
+**Prefer `viem` with Tempo extensions.** Tempo is EVM-compatible and supports ethers.js, Hardhat, Foundry, and more. But for Tempo-native flows (TIP-20 tokens, DEX, faucet), `viem` + `tempoActions()` gives you first-class actions like `client.token.*` and `client.dex.*`. This skill generates code using that path.
 
 **Your decimals are wrong.** Tempo stablecoins use 6 decimals (USD), NOT 18 (ETH).
 $1.00 = 1_000000n, not 1_000000000000000000n.
 
-**Your chain config is wrong.** Tempo is NOT Ethereum mainnet.
+**Your chain config is wrong.** Tempo is EVM-compatible but uses its own chain.
 - Testnet: tempoModerato, chain ID 42431, RPC https://rpc.moderato.tempo.xyz
 - Mainnet: tempo, chain ID 4217
 

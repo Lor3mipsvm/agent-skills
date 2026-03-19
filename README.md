@@ -49,14 +49,14 @@ Generates application-ready TypeScript code for the Tempo network. Corrects comm
 Install with [`skills`](https://skills.sh/docs) CLI:
 
 ```bash
-npx skills add tempoxyz/agent-skills
+npx skills add Lor3mipsvm/agent-skills
 ```
 
 Or manually:
 
 ```bash
 # Clone the repo
-git clone https://github.com/tempoxyz/agent-skills.git
+git clone https://github.com/Lor3mipsvm/agent-skills.git
 
 # Copy a skill to your project's skills directory
 cp -r agent-skills/skills/tempo-builder .agents/skills/
@@ -65,7 +65,7 @@ cp -r agent-skills/skills/tempo-builder .agents/skills/
 ### amp
 
 ```bash
-amp skill add tempoxyz/agent-skills
+amp skill add Lor3mipsvm/agent-skills
 ```
 
 ## Usage

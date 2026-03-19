@@ -2,7 +2,7 @@
 
 ## What You Probably Got Wrong
 
-**”TIP-20 is just an ERC-20 contract I have to deploy.”** On Tempo, TIP-20 tokens are protocol-native. You don’t deploy your own Solidity ERC-20; you create tokens via the Tempo actions.
+**”TIP-20 is just an ERC-20 contract I have to deploy.”** Tempo is EVM-compatible, but TIP-20 tokens are protocol-native. You *can* deploy Solidity ERC-20s, but for Tempo-native stablecoins with built-in memos, roles, and rewards, use the Viem Tempo actions instead.
 
 **“I used 18 decimals.”** Tempo stablecoins use 6 decimals:
 $1.00 = 1_000000n
