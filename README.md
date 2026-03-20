@@ -25,7 +25,7 @@ Browse Tempo documentation and source code via MCP. Use for exploring protocol s
 
 ### tempo-builder
 
-Generates application-ready TypeScript code for the Tempo network. Corrects common LLM misconceptions (wrong SDK, wrong decimals, wrong chain config) with ethskills-style "What You Probably Got Wrong" guidance. Covers TIP-20 tokens, stablecoin DEX (orderbook), and Machine Payments Protocol (MPP).
+Generates application-ready TypeScript code for the Tempo network. Corrects common LLM misconceptions (wrong SDK, wrong decimals, wrong chain config) with ethskills-style "What You Probably Got Wrong" guidance. Covers TIP-20 tokens, stablecoin DEX (orderbook), and Machine Payments Protocol (MPP). Agentic development on Tempo is much smoother with this repo. 
 
 **Use when:**
 
